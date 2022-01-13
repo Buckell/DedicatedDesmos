@@ -5,3 +5,7 @@ x64/debug/resources
 *.exe
 *.pdb
 *.dll
+DedicatedDesmos.vcxproj
+DedicatedDesmos.vcxproj.filters
+DedicatedDesmos.vcxproj.user
+DedicatedDesmos.aps
