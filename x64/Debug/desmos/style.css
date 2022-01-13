@@ -1,0 +1,213 @@
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+#calculator {
+    position: absolute;
+    top: 46px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.navbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 46px;
+    background-color: #2a2a2a;
+}
+
+.save-form {
+    margin-right: 10px;
+    float: right;
+    vertical-align: center;
+}
+
+.save-textbox {
+    display: inline-block;
+    height: 26px;
+    border-radius: 7px;
+    border: hidden;
+    padding: 3px 10px;
+    padding-bottom: 2px;
+    margin-top: 8px;
+    font-family: "Roboto", sans-serif;
+    font-weight: 700;
+}
+
+.save-button {
+    display: inline-block;
+    height: 100%;
+    border-radius: 7px;
+    border: hidden;
+    padding: 6px 10px;
+    margin-right: 15px;
+    font-family: "Roboto", sans-serif;
+    font-weight: 900;
+    background-color: #20AA20;
+    color: white;
+}
+
+.save-button:hover {
+    cursor: pointer;
+    background-color: #188318;
+}
+
+.save-button:active {
+    background-color: #126312;
+}
+
+.files-button {
+    display: inline-block;
+    height: 100%;
+    border-radius: 7px;
+    border: hidden;
+    padding: 6px 10px;
+    font-family: "Roboto", sans-serif;
+    font-weight: 900;
+    background-color: #CC7700;
+    color: white;
+}
+
+.files-button:hover {
+    cursor: pointer;
+    background-color: #9b5a00;
+}
+
+.files-button:active {
+    cursor: pointer;
+    background-color: #7e4900;
+}
+
+.sidebar {
+    z-index: 1;
+    position: fixed;
+    top: 46px;
+    right: 0;
+    width: 400px;
+    height: calc(100vh - 46px);
+    
+    background: #FFF;
+    list-style-type: none;
+    -webkit-font-smoothing: antialiased;
+    
+    transform-origin: 0% 0%;
+    transform: translate(100%, 0);
+    /* transition: transform 0.7s ease-out; */
+    
+    overflow-y: scroll;
+
+    box-shadow: 0 0 3px #000;
+}
+
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none; /* Safari */
+       -khtml-user-select: none; /* Konqueror HTML */
+         -moz-user-select: none; /* Old versions of Firefox */
+          -ms-user-select: none; /* Internet Explorer/Edge */
+              user-select: none; /* Non-prefixed version, currently
+                                    supported by Chrome, Edge, Opera and Firefox */
+}
+
+.save-listing {
+    height: 50px;
+    border-bottom: solid 1px #EEE;
+}
+
+.save-listing:hover {
+    cursor: pointer;
+    background-color: #DDD;
+}
+
+.save-listing p {
+    margin-left: 20px;
+    height: 20px;
+    margin-top: 15px;
+    display: inline-block;
+    font-family: "Roboto", sans-serif;
+    font-weight: 900;
+    color: #555;
+}
+
+.save-listing a {
+    float: right;
+    width: 20px;
+    height: 20px;
+    border-radius: 7px;
+    border: hidden;
+    background-color: #777;
+    color: white;
+    margin-right: 10px;
+    margin-top: 15px;
+}
+
+.save-listing a:hover {
+    cursor: pointer;
+    background-color: #911;
+}
+
+#prompt-modal {
+    position: fixed;
+    z-index: 2;
+    top: calc(50vh - 60px);
+    right: calc(50vw - 150px);
+    width: 300px;
+    height: 120px;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 0 3px #DDD;
+    text-align: center;
+    display: none;
+}
+
+#prompt-modal div {
+    position: absolute;
+    bottom: 15px;
+    width: 100%;
+}
+
+#prompt-text {
+    font-family: "Roboto", sans-serif;
+    font-weight: 300;
+    font-size: 15px;
+    margin-bottom: 25px;
+    margin: 10px;
+}
+
+.confirm-button {
+    height: 40px;
+    border-radius: 7px;
+    border: hidden;
+    padding: 6px 10px;
+    font-family: "Roboto", sans-serif;
+    font-weight: 900;
+    background-color: #CCC;
+    color: white;
+    margin-right: 5px;
+}
+
+.confirm-button:hover {
+    cursor: pointer;
+    background-color: #BBB;
+}
+
+.cancel-button {
+    height: 40px;
+    border-radius: 7px;
+    border: hidden;
+    padding: 6px 10px;
+    font-family: "Roboto", sans-serif;
+    font-weight: 900;
+    background-color: #CCC;
+    color: white;
+}
+
+.cancel-button:hover {
+    cursor: pointer;
+    background-color: #BBB;
+}

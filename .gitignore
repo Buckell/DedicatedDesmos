@@ -1,0 +1,7 @@
+.vs
+DedicatedDesmos/resources
+DedicatedDesmos/x64
+x64/debug/resources
+*.exe
+*.pdb
+*.dll

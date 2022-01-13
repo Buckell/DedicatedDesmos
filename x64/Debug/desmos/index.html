@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Untitled</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <link rel="stylesheet" type="text/css" href="Roboto/roboto.css">
+        <script type="text/javascript" src="calculator.js"></script>
+    </head>
+    <body onload="reloadSavedListings()">
+        <div class="navbar">
+            <div class="save-form">
+                <input id="save-textbox" class="save-textbox" type="text" maxlength="64" placeholder="Name">
+                <a class="save-button noselect" onclick="promptSave()">Save</a>
+                <a class="files-button noselect" onclick="toggleFileMenu()">Saved Graphs</a>
+            </div>
+        </div>
+        <div class="sidebar">
+        </div>
+        <div id="calculator"></div>
+        <div id="prompt-modal">
+            <p id="prompt-text">Are you sure you want to delete "Some Random Graph"?</p>
+            <div>
+                <a class="confirm-button" onclick="confirmPrompt()">Confirm</a>
+                <a class="cancel-button" onclick="cancelPrompt()">Cancel</a>
+            </div>
+        </div>
+        
+        <script defer>
+            window.Calc = Desmos.GraphingCalculator(document.querySelector('#calculator'));
+
+            function toggleFileMenu() {
+                let fileMenu = document.querySelector(".sidebar");
+                fileMenu.style.transform = (fileMenu.style.transform != "none") ? "none" : "translate(100%, 0)";
+            }
+
+            function reloadSavedListings() {
+                let sidebar = document.querySelector(".sidebar");
+
+                sidebar.innerHTML = "";
+
+                let saved = DD_GET_STORED_STATE_LIST();
+
+                saved.forEach(function (state) {
+                    sidebar.innerHTML += 
+                    `<div class="save-listing" onclick="promptLoad('${state}')">
+                        <p>${state}</p>
+                        <a class="delete-button" tooltip="Delete" onclick="event.stopPropagation(); promptDelete('${state}')"></a>
+                    </div>`;
+                });
+            }
+
+            var promptAction = null;
+            var promptSaveName = null;
+
+            function displayPrompt() {
+                let modal = document.getElementById("prompt-modal");
+                modal.style.display = "initial";
+            }
+
+            function cancelPrompt() {
+                let modal = document.getElementById("prompt-modal");
+                modal.style.display = "none";
+            }
+
+            function confirmPrompt(name) {
+                if (promptAction) {
+                    promptAction();
+                }
+
+                cancelPrompt();
+            }
+
+            function promptLoad(name) {
+                let promptText = document.getElementById("prompt-text");
+
+                promptText.innerHTML = "Are you sure you want to load \"" + name + "\"? And unsaved progress on the current graph will be lost.";
+
+                promptSaveName = name;
+                promptAction = function () {
+                    let stored = DD_GET_STORED_STATE(promptSaveName);
+                    
+                    if (stored) {
+                        window.Calc.setState(JSON.parse(stored));
+                        document.querySelector('head>title').text = promptSaveName;
+                    }
+
+                    let saveTextbox = document.getElementById("save-textbox");
+                    saveTextbox.value = promptSaveName;
+                };
+
+                displayPrompt();
+            }
+
+            function promptDelete(name) {
+                let promptText = document.getElementById("prompt-text");
+
+                promptText.innerHTML = "Are you sure you want to delete \"" + name + "\"?";
+
+                promptSaveName = name;
+                promptAction = function () {
+                    DD_DELETE_STORED_STATE(promptSaveName);
+                    reloadSavedListings();
+                };
+
+                displayPrompt();
+            }
+
+            function promptSave() {
+                let saveTextbox = document.getElementById("save-textbox");
+
+                if (saveTextbox.value != "") {
+                    if (DD_GET_STORED_STATE(saveTextbox.value)) {
+                        let promptText = document.getElementById("prompt-text");
+
+                        promptText.innerHTML = "Are you sure you want to save \"" + saveTextbox.value + "\"? This will overwrite the old version.";
+
+                        promptSaveName = saveTextbox.value;
+                        promptAction = function () {
+                            DD_STORE_STATE(promptSaveName, JSON.stringify(window.Calc.getState()));
+                            reloadSavedListings();
+                            document.querySelector('head>title').text = promptSaveName;
+                        };
+
+                        displayPrompt();
+                    } else {
+                        DD_STORE_STATE(saveTextbox.value, JSON.stringify(window.Calc.getState()));
+                        reloadSavedListings();
+                        document.querySelector('head>title').text = saveTextbox.value;
+                    }
+                }
+            }
+        </script>
+    </body>
+</html>
